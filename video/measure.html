@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>measure</title>
+<style>body{margin:0}iframe{border:0;width:1920px;height:1080px;display:block}</style></head>
+<body>
+<!-- Video helper: loads an app page at 1920px wide and reports where elements are
+     (page coordinates, CSS px) plus the page height. Used by make_video.py with
+     headless Chrome --dump-dom. ?u=<hash route>&q=<JSON [[name, js returning element]]> -->
+<iframe id="f"></iframe><pre id="out"></pre>
+<script>
+const p = new URLSearchParams(location.search);
+const f = document.getElementById("f");
+f.src = "../index.html" + (p.get("s") || "") + p.get("u");
+f.onload = () => setTimeout(() => {
+  const w = f.contentWindow, d = f.contentDocument, res = { height: d.documentElement.scrollHeight, rects: {} };
+  for (const [name, expr] of JSON.parse(p.get("q") || "[]")) {
+    try {
+      const el = w.eval(expr);
+      const r = el.getBoundingClientRect();
+      res.rects[name] = [r.left, r.top + w.scrollY, r.width, r.height];
+    } catch (e) { res.rects[name] = "ERR " + e.message; }
+  }
+  document.getElementById("out").textContent = "@@" + JSON.stringify(res) + "@@";
+}, 1500);
+</script></body></html>

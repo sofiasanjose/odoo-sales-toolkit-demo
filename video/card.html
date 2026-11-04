@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>card</title>
+<style>
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;font-family:-apple-system,"Avenir Next","Helvetica Neue",Arial,sans-serif}
+  body{background:#0B3D4F;color:#fff;position:relative}
+  .wrap{position:absolute;left:150px;top:190px;right:150px}
+  .brand{display:flex;align-items:center;gap:22px;font-size:34px;font-weight:700}
+  .brand small{display:block;font-size:22px;font-weight:500;color:#9fc3cf}
+  h1{font-size:96px;line-height:1.02;letter-spacing:-.02em;margin:90px 0 0}
+  p{font-size:34px;color:#F8D9BE;margin:28px 0 0;max-width:1400px;line-height:1.35}
+  .note{position:absolute;right:80px;top:60px;font-size:22px;color:#9fc3cf;text-align:right}
+  svg.w{position:absolute;left:0;right:0;bottom:120px;width:100%}
+</style></head>
+<body>
+<svg class="w" viewBox="0 0 1920 220" preserveAspectRatio="none" height="220"><path d="M0 90c160-100 320-100 480 0s320 100 480 0 320-100 480 0 320 100 480 0" stroke="#F76707" stroke-width="26" fill="none"/><path d="M0 170c160-100 320-100 480 0s320 100 480 0 320-100 480 0 320 100 480 0" stroke="#135D74" stroke-width="26" fill="none"/></svg>
+<div class="wrap">
+  <div class="brand"><svg viewBox="0 0 40 40" width="84" height="84"><rect width="40" height="40" rx="10" fill="#0E4A60"/><path d="M6 24c5-5 9-5 14 0s9 5 14 0" stroke="#F76707" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="27" cy="12.5" r="4.5" fill="#FBF3E4"/></svg>
+    <div>Odoo Sales Toolkit<small>by Sofia</small></div></div>
+  <h1 id="h"></h1><p id="p"></p>
+</div>
+<div class="note" id="n"></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.getElementById("h").textContent = q.get("h") || "";
+  document.getElementById("p").textContent = q.get("p") || "";
+  document.getElementById("n").textContent = q.get("n") || "";
+</script>
+</body></html>

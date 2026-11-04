@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puerto Sabor Sales Toolkit</title>
+<meta name="description" content="Odoo-powered sales toolkit demo: live stock, customer profiles, recommendations, restock alerts, a management dashboard and a branded PDF catalogue builder. Fictional company and data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B3D4F'/%3E%3Cpath d='M5 19c4-4 7-4 11 0s7 4 11 0' stroke='%23F76707' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='10' r='3.5' fill='%23FBF3E4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="demo-ribbon" role="note">Demo copy of a toolkit in use at my current company. Their data is confidential, so <b>Puerto Sabor Foods</b> and all its products, customers and orders are made up. <a href="#/about">How it works</a></div>
+<header class="top">
+  <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  <a class="logo" href="#/home" aria-label="Home">
+    <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#0B3D4F"/><path d="M6 24c5-5 9-5 14 0s9 5 14 0" stroke="#F76707" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="27" cy="12.5" r="4.5" fill="#FBF3E4"/></svg>
+    <span><b>Puerto Sabor</b><small>Sales Toolkit</small></span>
+  </a>
+  <div class="sync" id="sync" title="The toolkit reads a snapshot of Odoo. In production it refreshes every night and on demand."></div>
+  <div class="me" id="me"></div>
+</header>
+<nav id="nav" aria-label="Tools">
+  <a href="#/home" data-view="home"><span>⌂</span>Home</a>
+  <a href="#/dashboard" data-view="dashboard"><span>▤</span>Dashboard</a>
+  <div class="nav-h">Selling</div>
+  <a href="#/stock" data-view="stock"><span>▦</span>Stock check</a>
+  <a href="#/customer" data-view="customer"><span>☺</span>Customer profile</a>
+  <a href="#/reco" data-view="reco"><span>✦</span>Recommendations</a>
+  <a href="#/restock" data-view="restock"><span>⟳</span>Restock requests<em id="restock-badge" hidden></em></a>
+  <a href="#/catalog" data-view="catalog"><span>▣</span>Catalog builder</a>
+  <div class="nav-h">About</div>
+  <a href="#/about" data-view="about"><span>?</span>How it works</a>
+</nav>
+<main id="main" tabindex="-1"></main>
+
+<script src="data/demo-data.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/packshot.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/views/home.js"></script>
+<script src="assets/views/dashboard.js"></script>
+<script src="assets/views/stock.js"></script>
+<script src="assets/views/customer.js"></script>
+<script src="assets/views/reco.js"></script>
+<script src="assets/views/restock.js"></script>
+<script src="assets/views/catalog.js"></script>
+<script src="assets/views/about.js"></script>
+<script>
+  (function () {
+    const { D, fmt, me } = App;
+    document.getElementById("sync").innerHTML =
+      '<i></i>Synced from Odoo · ' + fmt.date(D.meta.today) + ', 07:00';
+    document.getElementById("me").innerHTML =
+      '<span class="avatar">' + me.name.split(" ").map((w) => w[0]).join("") + '</span><span>' + me.name + '<small>' + me.area + '</small></span>';
+    App.render();
+    const pm = new URLSearchParams(location.search).get("print");
+    if (pm) document.body.classList.add(pm === "catalog" ? "printing-catalog" : "printing-report");
+  })();
+</script>
+</body>
+</html>
